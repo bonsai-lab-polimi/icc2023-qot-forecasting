@@ -40,7 +40,7 @@ class SingleInputSingleOutputMLP(LightningModule):
         mse = F.mse_loss(y_hat, y)
         self.log("test_rmse", torch.sqrt(mse))
 
-    def predict_step(self, batch, batch_idx, dataloader_idx):
+    def predict_step(self, batch, batch_idx, dataloader_idx=0):
         return self.forward(batch)
 
     def configure_optimizers(self):
@@ -85,7 +85,7 @@ class MultiInputMultiOutputMLP(LightningModule):
         mse = F.mse_loss(y_hat, y)
         self.log("test_rmse", torch.sqrt(mse))
 
-    def predict_step(self, batch: torch.Tensor, batch_idx: int, dataloader_idx: int):
+    def predict_step(self, batch, batch_idx, dataloader_idx=0):
         return self.forward(batch)
 
     def configure_optimizers(self):
