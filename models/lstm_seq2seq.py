@@ -1,6 +1,7 @@
 import random
 
 import numpy as np
+import numpy.typing as npt
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -121,7 +122,7 @@ class VDEncoderDecoder(nn.Module):
                     tepoch.set_postfix(epoch_loss=epoch_loss)
 
     @torch.no_grad()
-    def predict(self, x: torch.Tensor) -> np.ndarray:
+    def predict(self, x: torch.Tensor) -> npt.NDArray:
         # encode input_tensor
         enc_output, _ = self.encoder(x)
         # decode input_tensor
@@ -146,7 +147,7 @@ class VDSeq2Seq(nn.Module):
         training_prediction: str = "recursive",
         teacher_forcing_ratio: float = 0.5,
         dynamic_tf: bool = False,
-    ) -> np.ndarray:
+    ) -> npt.NDArray:
         # initialize array of losses
         losses = np.full(n_epochs, np.nan)
         for epoch in range(n_epochs):
@@ -222,7 +223,7 @@ class VDSeq2Seq(nn.Module):
         return losses
 
     @torch.no_grad()
-    def predict(self, x: torch.Tensor, target_len: int) -> np.ndarray:
+    def predict(self, x: torch.Tensor, target_len: int) -> npt.NDArray:
         # encode input_tensor
         _, encoder_hidden = self.encoder(x)
         # initialize tensor for predictions
